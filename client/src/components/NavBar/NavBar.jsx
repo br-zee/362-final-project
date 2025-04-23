@@ -10,8 +10,14 @@ import "./NavBar.css";
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { allowedCategories } from '../../stores/allowedCategories';
+import { useSelector } from 'react-redux';
 
 export default function NavBar() {
+
+    const [open, setOpen]  = useState(false);
+
+    const products = useSelector((state) => state.cart.products);
+
 
     const [toggleDropdown, setToggleDropdown] = useState(() => {
         return Object.keys(allowedCategories).map((cat) => {
@@ -106,10 +112,13 @@ export default function NavBar() {
                         <FavoriteBorderIcon/>
                     </div>
                     <div className="cart">
+                    <div className="cart" onClick={() => setOpen(!open)}>
                         <ShoppingCartOutlinedIcon/>
+                        <span>{products.length}</span>
                     </div>
                 </div>
             </div>
+        </div>
 
             {/*Mobile Navbar*/}
             <div className="mobile-nav">
@@ -156,10 +165,8 @@ export default function NavBar() {
                         </div>
                         }
                     </div>
-
-                    
+                    {open && <Cart />}
             </div>
         </nav>
-        
-    )
-}
+    );
+};
