@@ -5,7 +5,7 @@ module.exports = [
     name: 'strapi::cors',
     config: {
       enabled: true,
-      origin: ['http://localhost:1337', 'https://tiedandtrue.vercel.app'],
+      origin: ['http://127.0.0.1:5173', 'http://localhost:5173', 'https://tiedandtrue.vercel.app'],
       methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
       headers: ["Content-Type", "Authorization"],
       credentials: true,
