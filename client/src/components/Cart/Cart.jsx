@@ -1,5 +1,5 @@
 import React from "react";
-import "./Cart.scss";
+import "./Cart.css";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { useSelector } from "react-redux";
 import { removeItem, resetCart } from "../../redux/cartReducer";
@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { makeRequest } from "../../makeRequest";
 import { loadStripe } from "@stripe/stripe-js";
 
-const Cart = () => {
+export const Cart = () => {
   const products = useSelector((state) => state.cart.products);
   const dispatch = useDispatch();
 
@@ -19,9 +19,9 @@ const Cart = () => {
     return total.toFixed(2);
   };
 
-  const stripePromise = loadStripe(
-    "..." //PUT STRIPE KEY HERE
-  );
+  // const stripePromise = loadStripe(
+  //   "..." //PUT STRIPE KEY HERE
+  // );
   const handlePayment = async () => {
     try {
       const stripe = await stripePromise;
@@ -41,7 +41,7 @@ const Cart = () => {
       <h1>Products in your cart</h1>
       {products?.map((item) => (
         <div className="item" key={item.id}>
-          <img src={process.env.REACT_APP_UPLOAD_URL + item.img} alt="" />
+          <img src={item.img} alt="" />
           <div className="details">
             <h1>{item.title}</h1>
             <p>{item.desc?.substring(0, 100)}</p>
@@ -56,12 +56,12 @@ const Cart = () => {
         </div>
       ))}
       <div className="total">
-        <span>SUBTOTAL</span>
+        <span><p>SUBTOTAL</p></span>
         <span>${totalPrice()}</span>
       </div>
-      <button onClick={handlePayment}>PROCEED TO CHECKOUT</button>
+      <button onClick={handlePayment}><p>PROCEED TO CHECKOUT</p></button>
       <span className="reset" onClick={() => dispatch(resetCart())}>
-        Reset Cart
+        <p>Reset Cart</p>
       </span>
     </div>
   );

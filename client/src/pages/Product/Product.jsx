@@ -1,4 +1,4 @@
-import { useParams, Navigate } from "react-router-dom"
+import { useParams, Navigate, data } from "react-router-dom"
 import { isValidProduct } from "../../stores/allowedCategories"
 import { useEffect, useRef, useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
@@ -6,16 +6,20 @@ import StarOutlineOutlinedIcon from '@mui/icons-material/StarOutlineOutlined';
 import StarHalfOutlinedIcon from '@mui/icons-material/StarHalfOutlined';
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
 import "./Product.css";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/cartReducer";
 
 export default function Product() {
     const {category, subcategory, id} = useParams();
     if (!isValidProduct(category, subcategory)) return <Navigate to="/notfound" />;
 
-    const [quantity, setQuantity] = useState(0);
+    const dispatch = useDispatch();
+
+    const [quantity, setQuantity] = useState(1);
     function changeQuantity(e) {
         switch(e.target.textContent) {
             case "-":
-                quantity > 0 ? setQuantity(quantity-1) : null;
+                quantity > 1 ? setQuantity(quantity-1) : null;
                 break;
             case "+":
                 quantity < product.stock ? setQuantity(quantity+1) : null; 
@@ -29,8 +33,6 @@ export default function Product() {
     if (query) {
         var { products: [product], loading, error } = useFetch(query);
     }
-
-    console.log(product)
     
     return (
         <div>
@@ -64,17 +66,33 @@ export default function Product() {
 
                         {
                             product?.stock > 0
-                                ? <p>{product?.stock} remaining</p>
-                                : <p style={{color:'crimson'}}>Out of stock</p>
+                                ? <>
+                                    <p>{product?.stock} remaining</p>
+                                    <div className="quantity">
+                                        <div className="change-quantity minus" onClick={changeQuantity}>-</div>
+                                        <div className="amount">{quantity}</div>
+                                        <div className="change-quantity plus" onClick={changeQuantity}>+</div>
+                                    </div>
+
+                                    <button method="submit" onClick={() => dispatch(addToCart({
+                                        id: product.documentId,
+                                        title: product.title,
+                                        desc: product.description,
+                                        price: product.price,
+                                        img: product.img.url,
+                                        quantity,
+                                        stock: product.stock,
+                                    }))}>
+                                        <p>Add to cart</p>
+                                    </button>
+                                </>
+                                : <>
+                                    <p style={{color:'crimson'}}>Out of stock</p>
+                                    
+                                </>
                         }
 
-                        <div className="quantity">
-                            <div className="change-quantity minus" onClick={changeQuantity}>-</div>
-                            <div className="amount">{quantity}</div>
-                            <div className="change-quantity plus" onClick={changeQuantity}>+</div>
-                        </div>
-
-                        <button method="submit"><p>Add to cart</p></button>
+                        
                     </form>
                 </div>
             </div>

@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { allowedCategories } from '../../stores/allowedCategories';
 import { useSelector } from 'react-redux';
+import { Cart } from "../../components/Cart/Cart";
 
 export default function NavBar() {
 
@@ -111,14 +112,12 @@ export default function NavBar() {
                     <div className="favorite">
                         <FavoriteBorderIcon/>
                     </div>
-                    <div className="cart">
-                    <div className="cart" onClick={() => setOpen(!open)}>
+                    <div className="shopping-cart" onClick={() => setOpen(!open)}>
                         <ShoppingCartOutlinedIcon/>
                         <span>{products.length}</span>
                     </div>
                 </div>
             </div>
-        </div>
 
             {/*Mobile Navbar*/}
             <div className="mobile-nav">
@@ -128,6 +127,10 @@ export default function NavBar() {
                         </Link>
                         <div className="search">
                             <SearchOutlinedIcon/>
+                        </div>
+                        <div className="shopping-cart" onClick={() => setOpen(!open)}>
+                            <ShoppingCartOutlinedIcon/>
+                            <span>{products.length}</span>
                         </div>
                     </div>
 
@@ -165,8 +168,10 @@ export default function NavBar() {
                         </div>
                         }
                     </div>
-                    {open && <Cart />}
             </div>
+
+            {open && <Cart />}
+
         </nav>
     );
 };
