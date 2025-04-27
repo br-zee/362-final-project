@@ -8,6 +8,7 @@ import About from "./pages/About/About";
 import Login from "./pages/Login/Login";
 import Profile from "./pages/Profile/Profile";
 import Admin from "./pages/Admin/Admin";
+import Orders from "./pages/Orders/Orders";
 
 import Cookies from "js-cookie";
 import "./global.css";
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
       {
         path: "profile/admin",
         element: <Admin/>
+      },
+      {
+        path: "profile/orders",
+        element: <Orders/>
       },
 
       // page not found or invalid product

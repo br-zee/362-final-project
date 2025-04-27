@@ -58,7 +58,7 @@ export default function Login() {
         <div className="login-content">
             <form className="login-form" action="/profile" method="POST" onSubmit={handleLogIn}>
                 <fieldset>
-                    <legend>Log In</legend>
+                    <legend><h1>Log In</h1></legend>
                     <label htmlFor="username">Username</label>
                     <input type="text" name="username" id="login-username" />
                     <label htmlFor="password">Password</label>
@@ -69,7 +69,7 @@ export default function Login() {
 
             <form className="signup-form" action="" method="POST" onSubmit={handleSignUp}>
                 <fieldset>
-                    <legend>Sign Up</legend>
+                    <legend><h1>Sign Up</h1></legend>
                     <label htmlFor="email">Email</label>
                     <input type="email" name="email" id="signup-email" placeholder="example@email.com" />
                     <label htmlFor="username">Username</label>

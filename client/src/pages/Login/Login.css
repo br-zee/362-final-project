@@ -1,8 +1,11 @@
 .login-content {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    gap: 100px;
-    padding-inline: 100px;
+    gap: 30px;
+    max-width: 1000px;
+    margin: auto;
+    margin-block: 50px;
 }
 
 .login-content form, .login-content form * {
@@ -12,7 +15,7 @@
     width: 80%;
     border: 1px solid gray;
     padding-inline: 50px;
-    margin: 50px auto;
+    margin-inline: auto;
     border-radius: 20px;
 }
 .login-content form fieldset {
@@ -38,4 +41,11 @@
 }
 .login-content form fieldset input[type="submit"]:hover {
     background: rgb(172, 172, 172);
+}
+
+@media screen and (min-width: 960px) {
+    .login-content {
+        flex-direction: row;
+        padding-inline: 100px;
+    }
 }

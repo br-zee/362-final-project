@@ -1,6 +1,6 @@
 .product-page {
     display: grid;
-    grid-template-columns: minmax(170px, 1fr) 4fr;
+    grid-template-columns: minmax(120px, 1fr) 4fr;
     width: 100%;
     background: rgb(235, 235, 235);
 }
@@ -8,7 +8,8 @@
 .product-page .product-sidebar {
     margin: 20px 15px 0 10px;
     background: lightgray;
-    padding: 10px;
+    padding: 5px;
+    max-height: fit-content;
 }
 .product-sidebar form {
     display: flex;
@@ -18,9 +19,13 @@
 .product-sidebar form * {
     vertical-align: middle;
 }
+.product-sidebar form input[type="radio"] {
+    width: 10px;
+    margin-right: 5px;
+}
 .product-sidebar form fieldset {
     border: 2px ridge gray white;
-    font-size: 0.7rem;
+    font-size: 0.6rem;
 }
 .product-sidebar form fieldset p {
     margin-block: 10px;
@@ -30,7 +35,8 @@
     margin-block: 5px 20px;
     padding-block: 5px;
     cursor: pointer;
-    width: 50%;
+    width: 100%;
+    max-width: 100px;
 }
 .product-sidebar button:hover {
     background: rgb(176, 176, 176);
@@ -52,7 +58,6 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(60px, 80px));
     gap: 20px;
-    min-height: 100vh;
 }
 .product-card img {
     border-radius: 8px;
@@ -117,6 +122,9 @@
         margin: 30px 20px;
         background: lightgray;
         padding: 15px 10px;
+    }
+    .product-page .product-sidebar input {
+        margin-right: 5px;
     }
     .product-page .product-list {
         grid-template-columns: repeat(auto-fit, minmax(100px, 120px));

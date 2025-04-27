@@ -59,7 +59,7 @@
     opacity: 1;
 }
 
-.rating {
+.product-details .rating {
     display: flex;
     align-items: center;
     color: rgb(0, 0, 177);

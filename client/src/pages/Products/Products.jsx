@@ -74,6 +74,8 @@ export default function Products() {
         navigate("");
     }
 
+    console.log(allowedCategories[category])
+
     return (
         <div className="product-page">
 
@@ -85,9 +87,9 @@ export default function Products() {
                         <legend><p>Type</p></legend>
                         {
                             allowedCategories[category].map((subcat) =>
-                                <p key={subcat} id={subcat}>
-                                    <input type="radio" name="type" id={subcat} value={subcat} onChange={() => formRef.current.submit()} defaultChecked={subcat === selectedType} />
-                                    <label htmlFor={subcat}>{subcat[0].toUpperCase() + subcat.slice(1)}</label>
+                                <p key={`subcategory-${subcat}`} id={subcat}>
+                                    <input type="radio" name="type" id={`subcategory-${subcat}`} value={subcat} onChange={() => formRef.current.submit()} defaultChecked={subcat === selectedType} />
+                                    <label htmlFor={`subcategory-${subcat}`}>{subcat[0].toUpperCase() + subcat.slice(1)}</label>
                                 </p>
                             )
                         }
@@ -97,9 +99,9 @@ export default function Products() {
                         <legend><p>Color</p></legend>
                         {
                             colors.map(color =>
-                                <p key={color} id={color}>
-                                    <input type="radio" name="color" id={color} value={color} onChange={() => formRef.current.submit()} defaultChecked={color === selectedColor}/>
-                                    <label htmlFor={color}>{color[0].toUpperCase() + color.slice(1)}</label>
+                                <p key={`color-${color}`} id={color}>
+                                    <input type="radio" name="color" id={`color-${color}`} value={color} onChange={() => formRef.current.submit()} defaultChecked={color === selectedColor}/>
+                                    <label htmlFor={`color-${color}`}>{color[0].toUpperCase() + color.slice(1)}</label>
                                 </p>
                             )
                         }
