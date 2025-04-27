@@ -10,6 +10,7 @@ import Profile from "./pages/Profile/Profile";
 import Admin from "./pages/Admin/Admin";
 import Orders from "./pages/Orders/Orders";
 
+
 import Cookies from "js-cookie";
 import "./global.css";
 

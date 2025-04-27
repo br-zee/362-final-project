@@ -19,9 +19,6 @@ export const Cart = () => {
     return total.toFixed(2);
   };
 
-  makeRequest.get(`/orders?filters[user][$eq]=${JSON.parse(localStorage.getItem("data")).id}`)
-  .then(res => console.log(res))
-
   const stripePromise = loadStripe("pk_test_51RIMLcEOmBWiWW8wnV2gOUQJI5tfBuHXh0uxAu19V5Fvqh93STbdPdx3Dh9vkNSAHrkXhnw93LjrsTLXLYafcfqK00NIr2DECg");
   const handlePayment = async () => {
     try {

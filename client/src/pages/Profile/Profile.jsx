@@ -36,7 +36,7 @@ export default function Profile() {
                 <p>{user?.name || user?.username}</p>
             </div>
             <div className="links">
-                <button onClick={() => navigate("")}><p>Manage Orders</p></button>
+                <button onClick={() => navigate("orders")}><p>Manage Orders</p></button>
 
                 { user?.role?.type === 'authenticated' &&
                     <button onClick={() => navigate("admin")}><p>Admin</p></button>
