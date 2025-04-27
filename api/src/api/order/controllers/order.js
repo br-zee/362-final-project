@@ -6,7 +6,7 @@ const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::order.order', ({strapi}) => ({
     async create(ctx) {
-        const { products } = ctx.request.body.data;
+        const { products, userData } = ctx.request.body.data;
 
         const line_items = await Promise.all(
             products.map(async (product) => {
@@ -37,9 +37,17 @@ module.exports = createCoreController('api::order.order', ({strapi}) => ({
                 payment_method_types: ["card"], 
             });
 
-            await strapi.service("api::order.order").create({data: {
-                products, stripeId: session.id,
-            }});
+            await strapi.service("api::order.order").create({
+                data: {
+                    products, 
+                    stripeId: session.id,
+                    user: userData.id
+                }
+            });
+
+            // const invoice = await stripe.invoices.sendInvoice(session.id);
+
+            // strapi.log.info(JSON.stringify(await session));
 
             return { stripeSession: session }
         }
