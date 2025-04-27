@@ -38,7 +38,6 @@
 
 .product-page .product-page-content {
     padding-block: 40px;
-    height: 100vh;
     overflow-y: scroll;
 }
 .product-page .product-page-content .header {
@@ -52,12 +51,12 @@
 .product-page .product-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(60px, 80px));
-    row-gap: 20px;
-    column-gap: 20px;
+    gap: 20px;
+    min-height: 100vh;
 }
 .product-card img {
     border-radius: 8px;
-    height: 120px
+    height: 120px;
 }
 
 .product-card h1 {

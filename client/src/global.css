@@ -11,7 +11,8 @@ body {
 * {
     box-sizing: border-box;
     --heading-font: "Playfair Display";
-    --body-font: "Raleway"
+    --body-font: "Raleway";
+    scroll-behavior: smooth;
 }
 
 h1 {
@@ -19,7 +20,7 @@ h1 {
     margin: 0;
 }
 
-p {
+p, input, label {
     font-family: var(--body-font);
     margin: 0;
 }

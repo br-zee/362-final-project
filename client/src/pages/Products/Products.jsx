@@ -133,7 +133,7 @@ export default function Products() {
 
                                 return (
                                     <div key={product.id} className="product-card">
-                                        <Link to={productPath} className="link">
+                                        <Link to={productPath} className="link" onClick={() => window.scrollTo(0, 0)}>
                                             <img src={product?.img?.url} alt={product?.img?.name} />
                                         </Link>
                                         <h1>{product.title}</h1>
