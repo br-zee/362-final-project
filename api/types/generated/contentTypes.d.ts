@@ -394,7 +394,7 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     products: Schema.Attribute.Relation<'manyToMany', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
-    sub_categories: Schema.Attribute.Relation<
+    subcategories: Schema.Attribute.Relation<
       'manyToMany',
       'api::sub-category.sub-category'
     >;
@@ -511,6 +511,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
 export interface ApiRatingRating extends Struct.CollectionTypeSchema {
   collectionName: 'ratings';
   info: {
+    description: '';
     displayName: 'Rating';
     pluralName: 'ratings';
     singularName: 'rating';
@@ -531,6 +532,7 @@ export interface ApiRatingRating extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     products: Schema.Attribute.Relation<'manyToMany', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
+    reviewer: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Anonymous'>;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

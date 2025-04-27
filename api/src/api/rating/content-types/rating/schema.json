@@ -4,7 +4,8 @@
   "info": {
     "singularName": "rating",
     "pluralName": "ratings",
-    "displayName": "Rating"
+    "displayName": "Rating",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -24,6 +25,10 @@
       "relation": "manyToMany",
       "target": "api::product.product",
       "inversedBy": "ratings"
+    },
+    "reviewer": {
+      "type": "string",
+      "default": "Anonymous"
     }
   }
 }
