@@ -17,5 +17,6 @@
 }
 .links button {
     margin-block: 10px 20px;
+    margin-inline: 10px;
     padding: 5px 20px;
 }

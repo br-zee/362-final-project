@@ -1,23 +1,33 @@
 import "./Admin.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { makeRequest } from "../../makeRequest";
-import axios from "axios";
 
 export default function Admin() {
     const navigate = useNavigate();
+    const submitBtn = useRef(null);
 
     const [categories, setCategories] = useState([]);
     const [subcategories, setSubcategories] = useState([]);
     const [types, setTypes] = useState([]);
     const [colors, setColors] = useState([]);
 
+    const [loading, setLoading] = useState(false);
+    const [invalid, setInvalid] = useState({});
+    const [success, setSuccess] = useState({});
+
     const user = JSON.parse(localStorage.getItem("data"));
     if (user.role.type !== 'authenticated') navigate("");
 
     function handleSubmit(e) {
         e.preventDefault();
+        setSuccess({});
+        setInvalid({});
+        setLoading(true);
+
+        submitBtn.disabled = true;
+        // submitBtn.style.background = 'gray';
         
         const title = e.target.title.value;
         const description = e.target.description.value;
@@ -43,21 +53,48 @@ export default function Admin() {
             categories: checkedCategories.map(id => ({ id })),
             sub_categories: checkedSubcategories.map(id => ({ id }))
         };
+        
 
-        console.log(img[0])
         const formData = new FormData();
-        formData.append("files", img[0]);
+        try {
+            formData.append("files", img[0], img[0].title);
+        }
+        catch(err) {
+            setInvalid({
+                msg: "Unsupported/invalid image!"
+            })
+            return;
+        }
 
         makeRequest.post("/products", { data })
         .then(res => {
-            console.log(res)
-            // makeRequest.post(`/upload`, formData)
-            // .then(res => {
-            //     console.log(res)
-            // })
-            // .catch(err => console.log(err))
+            const docId = res.data.data.documentId;
+
+            makeRequest.post(`/upload`, formData)
+            .then(res => {
+                const imgId = res.data[0].id
+                makeRequest.put(`/products/${docId}`, {
+                    data: {
+                        img: imgId,
+                    }
+                })
+                .then(res => setSuccess({
+                    msg: "Product has been uploaded!",
+                }))
+                .catch(err => setInvalid({
+                    msg: "Error linking image to product. Try again later",
+                }))
+            })
+            .catch(err => setInvalid({
+                msg: "Error uploading image. Try again later.",
+            }))
         })
-        .catch(err => console.log(err))
+        .catch(err => setInvalid({
+            msg: "Error uploading product. All fields must be filled out."
+        }));
+
+        setLoading(false);
+        e.target.reset();
     
     }
 
@@ -87,22 +124,22 @@ export default function Admin() {
 
                     <div className="form-group title">
                         <label htmlFor="title">Title</label>
-                        <input type="text" name="title" id="title" />
+                        <input type="text" name="title" id="title" required />
                     </div>
 
                     <div className="form-group description">
                         <label htmlFor="description">Description</label>
-                        <input type="text" name="description" id="description" />
+                        <input type="text" name="description" id="description" required />
                     </div>
                     
                     <div className="form-group img">
                         <label htmlFor="img">Image</label>
-                        <input type="file" name="img" id="img" />
+                        <input type="file" name="img" id="img" required />
                     </div>
 
                     <div className="form-group price">
                         <label htmlFor="price">Price</label>
-                        <span>$<input type="number" name="price" id="price" min="0" /></span>
+                        <span>$<input type="number" name="price" id="price" min="0" required /></span>
                     </div>
 
                     <div className="form-group categories">
@@ -135,7 +172,7 @@ export default function Admin() {
 
                     <div className="form-group type">
                         <label htmlFor="type">Type</label>
-                        <select type="text" name="type" id="type">
+                        <select type="text" name="type" id="type" required>
                             {
                                 types.map(type =>
                                     <option key={type} value={type}>{type[0].toUpperCase() + type.slice(1)}</option>
@@ -146,7 +183,7 @@ export default function Admin() {
 
                     <div className="form-group color">
                         <label htmlFor="color">Color</label>
-                        <select type="text" name="color" id="color">
+                        <select type="text" name="color" id="color" required>
                             {
                                 colors.map(color =>
                                     <option key={color} value={color}>{color[0].toUpperCase() + color.slice(1)}</option>
@@ -157,10 +194,15 @@ export default function Admin() {
 
                     <div className="form-group stock">
                         <label htmlFor="stock">Stock</label>
-                        <input type="number" name="stock" id="stock" min="0" />
+                        <input type="number" name="stock" id="stock" min="0" required />
                     </div>
-
-                    <input className="submit" type="submit" />
+                    
+                    <div className="submit">
+                        <input className="submit" type="submit" ref={submitBtn} />
+                        {loading && <p>Submitting... please wait.</p>}
+                        {success && <p className="submit-msg success">{success?.msg}</p>}
+                        {invalid && <p className="submit-msg invalid">{invalid?.msg}</p>}
+                    </div>
 
                 </fieldset>
             </form>

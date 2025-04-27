@@ -33,16 +33,16 @@ export default function Profile() {
         <div>
             <div className="greeting">
                 <h1>Hello</h1>
-                <p>{user?.name}</p>
+                <p>{user?.name || user?.username}</p>
             </div>
             <div className="links">
-                <button onClick={handleLogOut}><p>Log out</p></button>
-                {
-                    user?.role?.type === 'authenticated' &&
-                    <div>
-                        <button onClick={() => { navigate("admin") }}><p>Admin</p></button>
-                    </div>
+                <button onClick={() => navigate("")}><p>Manage Orders</p></button>
+
+                { user?.role?.type === 'authenticated' &&
+                    <button onClick={() => navigate("admin")}><p>Admin</p></button>
                 }
+
+                <button onClick={handleLogOut}><p>Log out</p></button>
             </div>
         </div>
     )

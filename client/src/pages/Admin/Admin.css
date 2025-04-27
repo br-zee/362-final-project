@@ -134,6 +134,17 @@
 }
 .admin-form fieldset .submit {
     grid-area: submit;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.admin-form fieldset .submit .submit-msg {
+}
+.admin-form fieldset .submit .submit-msg.success {
+    color: rgb(32, 172, 32);
+}
+.admin-form fieldset .submit .submit-msg.invalid {
+    color: crimson;
 }
 
 
