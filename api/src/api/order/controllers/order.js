@@ -28,6 +28,10 @@ module.exports = createCoreController('api::order.order', ({strapi}) => ({
         )
 
         try {
+            const customer = await stripe.customers.create({
+                email: userData?.email,
+            });
+
             const session = await stripe.checkout.sessions.create({
                 line_items,
                 mode: 'payment',
@@ -35,19 +39,16 @@ module.exports = createCoreController('api::order.order', ({strapi}) => ({
                 cancel_url: `${process.env.CLIENT_URL}?success=false`,
                 shipping_address_collection: {allowed_countries: ["US", "CA"]},
                 payment_method_types: ["card"], 
+                customer: customer.id
             });
 
             await strapi.service("api::order.order").create({
                 data: {
                     products, 
                     stripeId: session.id,
-                    user: userData.id
+                    user: userData?.id
                 }
             });
-
-            // const invoice = await stripe.invoices.sendInvoice(session.id);
-
-            // strapi.log.info(JSON.stringify(await session));
 
             return { stripeSession: session }
         }
