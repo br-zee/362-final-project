@@ -73,9 +73,7 @@ export default function Products() {
         })
         navigate("");
     }
-
-    console.log(allowedCategories[category])
-
+    
     return (
         <div className="product-page">
 
