@@ -33,6 +33,15 @@
     margin-bottom: 30px;
     margin-top: 10px;
 }
+.login-content form fieldset p {
+    text-align: center;
+}
+.login-content form fieldset p.success {
+    color: green;   
+}
+.login-content form fieldset p.error {
+    color: crimson;
+}
 .login-content form fieldset input[type="submit"] {
     cursor: pointer;
     border: none;

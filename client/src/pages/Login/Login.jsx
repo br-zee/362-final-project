@@ -9,7 +9,8 @@ export default function Login() {
 
     const navigate = useNavigate();
 
-    const [error, setError] = useState({});
+    const [signupError, setSignupError] = useState({});
+    const [loginError, setLoginError] = useState({});
     const [success, setSuccess] = useState({});
 
     function handleLogIn(e) {
@@ -26,8 +27,10 @@ export default function Login() {
             navigate("/profile");
         })
         .catch(error => {
-            if (error.response?.status == 400) {
-                console.log('invalid credentials');
+            if (error.response?.status == 500) {
+                setLoginError({
+                    msg: "Invalid credentials. Please try again."
+                });
             }
         });
     }
@@ -49,7 +52,7 @@ export default function Login() {
         .then(res => setSuccess({
             msg: "Success! Please log in with your credentials."
         }))
-        .catch(err => setError({
+        .catch(err => setSignupError({
             msg: "Error: please try again later."
         }))
     }
@@ -64,6 +67,7 @@ export default function Login() {
                     <label htmlFor="password">Password</label>
                     <input type="password" name="password" id="login-password" />
                     <input type="submit" value="Log In" />
+                    {loginError && <p className="error">{loginError?.msg}</p>}
                 </fieldset>
             </form>
 
@@ -77,8 +81,8 @@ export default function Login() {
                     <label htmlFor="password">Password</label>
                     <input type="password" name="password" id="signup-password" />
                     <input type="submit" value="Sign Up" />
-                    {success && <p>{success?.msg}</p>}
-                    {error && <p>{error?.msg}</p>}
+                    {success && <p className="success">{success?.msg}</p>}
+                    {signupError && <p className="error">{signupError?.msg}</p>}
                 </fieldset>
             </form>
         </div>

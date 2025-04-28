@@ -15,7 +15,7 @@ import { Cart } from "../../components/Cart/Cart";
 
 export default function NavBar() {
 
-    const [open, setOpen]  = useState(false);
+    const [open, setOpen] = useState(false);
 
     const products = useSelector((state) => state.cart.products);
 

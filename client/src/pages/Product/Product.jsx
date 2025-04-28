@@ -131,20 +131,19 @@ export default function Product() {
                                         <div className="change-quantity plus" onClick={changeQuantity}>+</div>
                                     </div>
 
-                                    <button method="submit" onClick={() => {
-                                        dispatch(addToCart({
-                                            id: product.documentId,
-                                            title: product.title,
-                                            desc: product.description,
-                                            price: product.price,
-                                            img: product.img.url,
-                                            stock: product.stock,
-                                            quantity,
-                                        }));
-
-                                        
-
-                                    }}>
+                                    <button method="submit" 
+                                        onClick={() => {
+                                            dispatch(addToCart({
+                                                id: product.documentId,
+                                                title: product.title,
+                                                desc: product.description,
+                                                price: product.price,
+                                                img: product.img.url,
+                                                stock: product.stock,
+                                                quantity,
+                                            }));
+                                        }}
+                                    >
                                         <p>Add to cart</p>
                                     </button>
                                 </>
