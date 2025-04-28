@@ -159,8 +159,7 @@ export default function NavBar() {
                         <FavoriteBorderIcon/>
                     </div>
                     <div className="shopping-cart" onClick={() => {
-                        const userData = localStorage.getItem("data");
-                        console.log(userData);
+                        const userData = JSON.parse(localStorage.getItem("data"));
                         userData ? setOpen(!open) : navigate("/login");
                     }}>
                         <ShoppingCartOutlinedIcon/>
