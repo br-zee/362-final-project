@@ -21,6 +21,7 @@ import {
   RouterProvider,
   Outlet
 } from "react-router-dom"
+import Search from "./pages/Search/Search";
 
 
 const Layout = () => {
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
       {
         path: "profile/orders",
         element: <Orders/>
+      },
+      {
+        path: "search",
+        element: <Search/>
       },
 
       // page not found or invalid product

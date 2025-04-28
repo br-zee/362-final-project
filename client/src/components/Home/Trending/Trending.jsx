@@ -34,7 +34,7 @@ export default function Trending() {
                 <div className="trending-product-list" ref={listRef}>
                     {
                         products.map(product =>
-                            <Link to={`${product.categories[0]?.title}/${product?.documentId}`} key={product.id} className="link product-card">
+                            <Link to={`${product.categories[0]?.title}/${product?.documentId}`} key={product.id} className="link product-card" onClick={() => scrollTo(0, 0)}>
                                 <div className="img">
                                     <img src={product?.img?.url} alt={product?.img?.title} />
                                 </div>

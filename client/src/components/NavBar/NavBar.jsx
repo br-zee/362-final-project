@@ -46,6 +46,7 @@ export default function NavBar() {
     const handleSearch = (e) => {
         e.preventDefault();
         console.log(e)
+        // console.log(searchQuery)
         if (searchQuery.trim()) {
             navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
             setSearchQuery('');
