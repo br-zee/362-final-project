@@ -23,6 +23,7 @@ export const Cart = () => {
   const handlePayment = async () => {
     try {
       const userData = localStorage.getItem("data");
+      console.log(userData)
 
       const stripe = await stripePromise;
       const res = await makeRequest.post("/orders", {
