@@ -11,7 +11,7 @@ export default function Products() {
     const { category } = useParams();
     if (!isValidProduct(category)) return <Navigate to="/notfound" />;
 
-    const [maxPrice, setMaxPrice] = useState(1000);
+    const [maxPrice, setMaxPrice] = useState(100);
     const [sort, setSort] = useState(null);
     const [selectedSubCats, setSelectedSubCats] = useState([]);
     const [selectedColors, setSelectedColors] = useState([]);
@@ -78,10 +78,10 @@ export default function Products() {
     },[]);
 
     function clearFilters() {
-        const filters = formRef.current.querySelectorAll("fieldset p input");
-        filters.forEach(filter => {
-            filter.checked = false;
-        })
+        setSelectedColors([]);
+        setSelectedSubCats([]);
+        setSort(null);
+        setMaxPrice(100);
         navigate("");
     }
 
@@ -167,7 +167,7 @@ export default function Products() {
                             <input
                                 type="range"
                                 min={0}
-                                max={1000}
+                                max={100}
                                 value={maxPrice}
                                 onChange={(e) => setMaxPrice(e.target.value)}
                             />
