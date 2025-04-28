@@ -38,7 +38,8 @@ export default function Login() {
     function handleSignUp(e) {
         e.preventDefault();
         setSuccess({});
-        setError({});
+        setSignupError({});
+        setLoginError({});
         
         const email = e.target.email.value;
         const user = e.target.username.value;
