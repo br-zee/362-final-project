@@ -5,29 +5,53 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
+import CloseIcon from '@mui/icons-material/Close';
 
 import "./NavBar.css";
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState, useRef, useEffect } from 'react';
 import { allowedCategories } from '../../stores/allowedCategories';
 import { useSelector } from 'react-redux';
 import { Cart } from "../../components/Cart/Cart";
 
 export default function NavBar() {
 
-    const [open, setOpen] = useState(false);
-
     const products = useSelector((state) => state.cart.products);
+    const navigate = useNavigate();
 
-
+    const [open, setOpen] = useState(false);
     const [toggleDropdown, setToggleDropdown] = useState(() => {
         return Object.keys(allowedCategories).map((cat) => {
             return [cat, false];
         });
     })
-
     const [mobileNav, setMobileNav] = useState(false);
     const [mobileAnimation, setMobileAnimation] = useState("close");
+
+    const [searchQuery, setSearchQuery] = useState('');
+    const [showSearch, setShowSearch] = useState(false);
+    const searchRef = useRef(null);
+
+    // Close search when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (searchRef.current && !searchRef.current.contains(event.target)) {
+                setShowSearch(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        console.log(e)
+        if (searchQuery.trim()) {
+            navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+            setSearchQuery('');
+            setShowSearch(false);
+        }
+    };
 
     function toggleMobileNav() {
         setMobileAnimation(prev => prev == "close" ? "open" : "close");
@@ -102,10 +126,33 @@ export default function NavBar() {
                     <Link className="link" to="/"><h1>Tied & True</h1></Link>
                 </div>
                 
-                <div className="category other">
-                    <div className="search">
-                        <SearchOutlinedIcon/>
-                    </div>
+                <div className="category other" ref={searchRef}>
+                    {showSearch ? (
+                        <form onSubmit={handleSearch} className="search-form">
+                            <input
+                                type="text"
+                                placeholder="Search products..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="search-input"
+                                autoFocus
+                            />
+                            <button type="submit" className="search-submit">
+                                <SearchOutlinedIcon />
+                            </button>
+                            <button 
+                                type="button" 
+                                className="search-close"
+                                onClick={() => setShowSearch(false)}
+                            >
+                                <CloseIcon />
+                            </button>
+                        </form>
+                    ) : (
+                        <div className="search-icon" onClick={() => setShowSearch(true)}>
+                            <SearchOutlinedIcon/>
+                        </div>
+                    )}
                     <Link to="profile" className="link profile">
                         <PersonOutlineIcon/>
                     </Link>
@@ -125,7 +172,11 @@ export default function NavBar() {
                         <Link to="profile" className="link profile">
                             <PersonOutlineIcon/>
                         </Link>
-                        <div className="search">
+                        <div className="search" 
+                            onClick={() => {
+                                toggleMobileNav();
+                                setShowSearch(true);
+                            }}>
                             <SearchOutlinedIcon/>
                         </div>
                         <div className="shopping-cart" onClick={() => setOpen(!open)}>
@@ -143,8 +194,31 @@ export default function NavBar() {
 
                         {mobileNav &&
                         <div className="mobile-products" style={{ animationName: mobileAnimation }}>
-                            {
-                            navigationLinks.map(link => {
+
+                            {showSearch && (
+                                <form onSubmit={handleSearch} className="mobile-search-form">
+                                    <input
+                                        type="text"
+                                        placeholder="Search products..."
+                                        value={searchQuery}
+                                        onChange={(e) => setSearchQuery(e.target.value)}
+                                        className="search-input"
+                                        autoFocus
+                                    />
+                                    <button type="submit" className="search-submit">
+                                        <SearchOutlinedIcon />
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        className="search-close"
+                                        onClick={() => setShowSearch(false)}
+                                    >
+                                        <CloseIcon />
+                                    </button>
+                                </form>
+                            )}
+                            
+                            {navigationLinks.map(link => {
                                 return (
                                     <div key={link.id} className={link.category}>
                                         <Link className="link" to={`/${link.category}`}>

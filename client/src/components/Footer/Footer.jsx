@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
-import "./Footer.css"
+import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
+import "./Footer.scss"
 
 export default function Footer() {
     return (
@@ -22,9 +23,15 @@ export default function Footer() {
                 <div className="social-media">
                     <h1>Follow us:</h1>
                     <div className="social-media-links">
-                        <a href="/" target="_blank" className="social-media-link"></a>
-                        <a href="/" target="_blank" className="social-media-link"></a>
-                        <a href="/" target="_blank" className="social-media-link"></a>
+                    <a href="https://www.facebook.com" target="_blank" className="social-media-link facebook">
+                        <FaFacebook />
+                    </a>
+                    <a href="https://www.twitter.com" target="_blank" className="social-media-link twitter">
+                        <FaTwitter />
+                    </a>
+                    <a href="https://www.instagram.com" target="_blank" className="social-media-link instagram">
+                        <FaInstagram />
+                    </a>
                     </div>
                     
                 </div>

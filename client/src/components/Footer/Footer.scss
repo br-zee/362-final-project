@@ -1,0 +1,111 @@
+.footer {
+    background-color: #f8f9fa;
+    padding: 20px;
+    color: #333;
+    text-align: center;
+  
+    .main-content {
+      display: flex;
+      justify-content: space-around;
+      padding: 20px 0;
+  
+      .help-links, .subscribe, .social-media {
+        flex: 1;
+        margin: 0 10px;
+  
+        h1 {
+          font-size: 1.2rem;
+          margin-bottom: 10px;
+        }
+  
+        p {
+          font-size: 0.9rem;
+          margin-block: 10px;
+        }
+  
+        .link {
+          text-decoration: none;
+          color: #007bff;
+  
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+  
+      .footer-form {
+        display: flex;
+        flex-direction: column;
+  
+        input[type="email"] {
+          padding: 10px;
+          margin-bottom: 10px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+        }
+  
+        input[type="submit"] {
+          padding: 10px;
+          background-color: #007bff;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+  
+          &:hover {
+            background-color: #0056b3;
+          }
+        }
+      }
+  
+      .social-media-links {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+  
+        .social-media-link {
+          color: #333;
+          transition: transform 0.3s ease, color 0.3s ease;
+  
+          &:hover {
+            transform: scale(1.1);
+            color: #007bff;
+          }
+  
+          &.facebook {
+            color: adjust-color(#1877F2, $lightness: -10%);
+  
+            &:hover {
+              color: adjust-color(#1877F2, $lightness: -15%);
+            }
+          }
+  
+          &.twitter {
+            color: adjust-color(#1DA1F2, $lightness: -10%);
+  
+            &:hover {
+              color: adjust-color(#1DA1F2, $lightness: -15%);
+            }
+          }
+  
+          &.instagram {
+            color: adjust-color(#E1306C, $lightness: -10%);
+  
+            &:hover {
+              color: adjust-color(#E1306C, $lightness: -15%);
+            }
+          }
+  
+          svg {
+            width: 40px;
+            height: 40px;
+          }
+        }
+      }
+    }
+  
+    .copyright {
+      font-size: 0.8rem;
+      margin-top: 10px;
+    }
+  }
