@@ -160,6 +160,7 @@ export default function NavBar() {
                     </div>
                     <div className="shopping-cart" onClick={() => {
                         const userData = localStorage.getItem("data");
+                        console.log(userData);
                         userData ? setOpen(!open) : navigate("/login");
                     }}>
                         <ShoppingCartOutlinedIcon/>
