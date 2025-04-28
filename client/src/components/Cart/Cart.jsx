@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 export const Cart = () => {
   const products = useSelector((state) => state.cart.products);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const totalPrice = () => {
     let total = 0;
@@ -23,14 +22,10 @@ export const Cart = () => {
 
   const stripePromise = loadStripe("pk_test_51RIMLcEOmBWiWW8wnV2gOUQJI5tfBuHXh0uxAu19V5Fvqh93STbdPdx3Dh9vkNSAHrkXhnw93LjrsTLXLYafcfqK00NIr2DECg");
   const handlePayment = async () => {
-    try {
+    try {      
+
       const userData = localStorage.getItem("data");
-      if (!userData) {
-        alert("Please login/signup first");
-        navigate("/login");
-        return;
-      };
-      
+
       const stripe = await stripePromise;
       const res = await makeRequest.post("/orders", {
         data: { 
@@ -62,7 +57,12 @@ export const Cart = () => {
           </div>
           <DeleteOutlinedIcon
             className="delete"
-            onClick={() => dispatch(removeItem(item.id))}
+            onClick={() => {
+              dispatch(removeItem(item.id));
+              let existingCart = JSON.parse(localStorage.getItem("cartItems"));
+              existingCart = existingCart?.filter(cartItem => cartItem.id !== item.id);
+              localStorage.setItem("cartItems", JSON.stringify(existingCart));
+            }}
           />
         </div>
       ))}
@@ -71,7 +71,12 @@ export const Cart = () => {
         <span>${totalPrice()}</span>
       </div>
       <button onClick={handlePayment}><p>PROCEED TO CHECKOUT</p></button>
-      <span className="reset" onClick={() => dispatch(resetCart())}>
+      <span className="reset" onClick={() => {
+        dispatch(resetCart());
+        let existingCart = JSON.parse(localStorage.getItem("cartItems"));
+        existingCart = [];
+        localStorage.setItem("cartItems", JSON.stringify(existingCart));
+      }}>
         <p>Reset Cart</p>
       </span>
     </div>

@@ -1,4 +1,4 @@
-import { useParams, Navigate, useSearchParams, Link, useNavigate } from "react-router-dom"
+import { useParams, Navigate, Link, useNavigate } from "react-router-dom"
 import { isValidProduct } from "../../stores/allowedCategories";
 import { useFetch } from "../../hooks/useFetch";
 import { allowedCategories } from "../../stores/allowedCategories";

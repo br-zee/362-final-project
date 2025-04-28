@@ -1,7 +1,7 @@
 import "./Product.css";
 import { useParams, Navigate } from "react-router-dom"
 import { Fragment, useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { isValidProduct } from "../../stores/allowedCategories"
 import { useFetch } from "../../hooks/useFetch";
@@ -24,6 +24,7 @@ export default function Product() {
     const [quantity, setQuantity] = useState(1);
     const [avgRating, setAvgRating] = useState([]);
 
+    const cartProducts = useSelector((state) => state.cart.products);
 
     function changeQuantity(e) {
         switch(e.target.textContent) {
@@ -133,7 +134,7 @@ export default function Product() {
 
                                     <button method="submit" 
                                         onClick={() => {
-                                            dispatch(addToCart({
+                                            const cartItem = {
                                                 id: product.documentId,
                                                 title: product.title,
                                                 desc: product.description,
@@ -141,7 +142,18 @@ export default function Product() {
                                                 img: product.img.url,
                                                 stock: product.stock,
                                                 quantity,
-                                            }));
+                                            }
+
+                                            dispatch(addToCart(cartItem));
+
+                                            const existingCart = JSON.parse(localStorage.getItem("cartItems"));
+                                            if (existingCart) {
+                                                existingCart.push(cartItem)
+                                                localStorage.setItem("cartItems", JSON.stringify(existingCart));
+                                            }
+                                            else {
+                                                localStorage.setItem("cartItems", JSON.stringify([cartItem]))
+                                            }
                                         }}
                                     >
                                         <p>Add to cart</p>

@@ -45,8 +45,6 @@ export default function NavBar() {
 
     const handleSearch = (e) => {
         e.preventDefault();
-        console.log(e)
-        // console.log(searchQuery)
         if (searchQuery.trim()) {
             navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
             setSearchQuery('');
@@ -160,7 +158,10 @@ export default function NavBar() {
                     <div className="favorite">
                         <FavoriteBorderIcon/>
                     </div>
-                    <div className="shopping-cart" onClick={() => setOpen(!open)}>
+                    <div className="shopping-cart" onClick={() => {
+                        const userData = localStorage.getItem("data");
+                        userData ? setOpen(!open) : navigate("/login");
+                    }}>
                         <ShoppingCartOutlinedIcon/>
                         <span>{products.length}</span>
                     </div>

@@ -10,11 +10,7 @@ import Profile from "./pages/Profile/Profile";
 import Admin from "./pages/Admin/Admin";
 import Orders from "./pages/Orders/Orders";
 
-
-import Cookies from "js-cookie";
 import "./global.css";
-
-import { useEffect, useState } from "react";
 
 import {
   createBrowserRouter,
@@ -23,8 +19,19 @@ import {
 } from "react-router-dom"
 import Search from "./pages/Search/Search";
 
+import { addToCart } from "./redux/cartReducer";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+
 
 const Layout = () => {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const storedCart = JSON.parse(localStorage.getItem("cartItems"));
+    storedCart?.forEach(item => dispatch(addToCart(item)));
+  }, []);
 
   return (
     <div className="app">
