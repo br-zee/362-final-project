@@ -15,7 +15,8 @@
     "version": "strapi version",
     "upgrade": "npx @strapi/upgrade latest",
     "upgrade:dry": "npx @strapi/upgrade latest --dry",
-    "test": "jest"
+    "test": "jest --coverage --forceExit",
+    "test-watch": "jest --coverage --watchAll --forceExit"
   },
   "dependencies": {
     "@strapi/plugin-cloud": "5.12.4",
@@ -39,5 +40,5 @@
   },
   "strapi": {
     "uuid": "3d6b9cad-35be-452e-9549-b1d52f8aa2a3"
-  }
+  }  
 }
